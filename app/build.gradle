@@ -22,12 +22,12 @@ android {
     namespace 'com.cookiejarapps.android.smartcookieweb'
 
     defaultConfig {
-        applicationId "com.cookiejarapps.android.smartcookieweb"
+        applicationId "cc.certimark.lux"
         minSdkVersion 21
         targetSdkVersion 35
         // Increment by 4 with each update
-        versionCode 128
-        versionName "29.1"
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

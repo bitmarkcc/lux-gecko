@@ -17,7 +17,7 @@
 
 ---
 
-## Disclaimers
+## Introduction
 
 Lux is a fork of [SmartCookieWeb-Preview](https://github.com/cookiejarapps/smartcookieweb-preview) - an open-source project intended to provide freedom of web browser configuration on mobile. Lux adds powerful Bitmark-related features that allow you to interact with the blockchain to get more information about the web sites you visit, as well as mark the sites on the blockchain.
 

@@ -10,8 +10,8 @@
  <td><img src="screenshots/certimark-verified.jpg" width="200" alt="Certificate verified" /></td>
  <td><img src="screenshots/certimark-match-other.jpg" width="200" alt="Matches a marked cert" /></td>
  <td><img src="screenshots/trust-signer.jpg" width="200" alt="Trust a signing key" /></td>
- <td><img src="screenshots/extensions-menu.jpg" width="200" alt="Extensions menu" /></td>
  <td><img src="screenshots/menu.jpg" width="200" alt="Browser menu" /></td>
+ <td><img src="screenshots/extensions-menu.jpg" width="200" alt="Extensions menu" /></td>
  </tr>
 </table>
 

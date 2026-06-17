@@ -50,27 +50,23 @@ class BrowserFragment : BaseBrowserFragment(), UserInteractionHandler {
             view = view
         )
 
-        if(UserPreferences(requireContext()).barAddonsList.isNotEmpty()) {
-            webExtToolbarFeature.set(
-                feature = WebExtensionToolbarFeature(
-                    browserToolbarView.view,
-                    components.store,
-                    UserPreferences(requireContext()).barAddonsList.split(","),
-                ),
-                owner = this,
-                view = view
-            )
-        } else if (UserPreferences(requireContext()).showAddonsInBar) {
-            webExtToolbarFeature.set(
-                feature = WebExtensionToolbarFeature(
-                    browserToolbarView.view,
-                    components.store,
-                    showAllExtensions = true
-                ),
-                owner = this,
-                view = view
-            )
-        }
+        // Always show Certimark in the toolbar; additionally show user-selected addons.
+        // Proxy Settings is intentionally not shown here — it's reachable from the menu.
+        val builtInAddons = listOf("certimark@certimark.cc")
+        val userList = UserPreferences(requireContext()).barAddonsList
+            .split(",")
+            .filter { it.isNotEmpty() }
+        val addonsList = builtInAddons + userList.filter { it !in builtInAddons }
+
+        webExtToolbarFeature.set(
+            feature = WebExtensionToolbarFeature(
+                browserToolbarView.view,
+                components.store,
+                addonsList,
+            ),
+            owner = this,
+            view = view
+        )
 
         windowFeature.set(
             feature = WindowFeature(

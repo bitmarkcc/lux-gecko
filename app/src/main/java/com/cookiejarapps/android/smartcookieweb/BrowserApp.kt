@@ -3,6 +3,7 @@ package com.cookiejarapps.android.smartcookieweb
 
 import android.app.Application
 import com.cookiejarapps.android.smartcookieweb.components.Components
+import com.cookiejarapps.android.smartcookieweb.proxy.BuiltInProxyExtension
 import com.cookiejarapps.android.smartcookieweb.theme.applyAppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -73,6 +74,9 @@ class BrowserApp : LocaleAwareApplication() {
                     },
                     onExtensionsLoaded = { extensions ->
                         components.addonUpdater.registerForFutureUpdates(extensions)
+                        installBuiltInCertimark()
+                        installBuiltInXmark()
+                        BuiltInProxyExtension.install(components.engine)
                     },
                     onUpdatePermissionRequest = components.addonUpdater::onUpdatePermissionRequest,
                 )
@@ -80,6 +84,28 @@ class BrowserApp : LocaleAwareApplication() {
                 Logger.error("Failed to initialize web extension support", e)
             }
         }
+    }
+
+    private fun installBuiltInCertimark() {
+        components.engine.installBuiltInWebExtension(
+            id = "certimark@certimark.cc",
+            url = "resource://android/assets/extensions/certimark/",
+            onSuccess = { logger.info("Certimark extension installed") },
+            onError = { throwable ->
+                logger.error("Failed to install Certimark extension", throwable)
+            }
+        )
+    }
+
+    private fun installBuiltInXmark() {
+        components.engine.installBuiltInWebExtension(
+            id = "xmark@xmark.cc",
+            url = "resource://android/assets/extensions/xmark/",
+            onSuccess = { logger.info("Xmark extension installed") },
+            onError = { throwable ->
+                logger.error("Failed to install Xmark extension", throwable)
+            }
+        )
     }
 
     private fun restoreBrowserState() = GlobalScope.launch(Dispatchers.Main) {

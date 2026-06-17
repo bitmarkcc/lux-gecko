@@ -244,7 +244,19 @@ class HomeFragment : Fragment() {
             ).addMigrations(MIGRATION_1_2).build()
 
             val shortcutDao = database?.shortcutDao()
-            val shortcuts: MutableList<ShortcutEntity> = shortcutDao?.getAll() as MutableList
+            var shortcuts: MutableList<ShortcutEntity> = shortcutDao?.getAll() as MutableList
+
+            // Seed default shortcuts on first run (only when none exist yet, so
+            // the user can freely edit/delete them and they won't reappear).
+            if (shortcuts.isEmpty()) {
+                shortcutDao?.insertAll(
+                    ShortcutEntity(url = "https://luxbrowser.com", title = "Lux"),
+                    ShortcutEntity(url = "https://linkmark.xyz", title = "Linkmark"),
+                    ShortcutEntity(url = "https://bitmark.io", title = "Bitmark"),
+                    ShortcutEntity(url = "https://x.com", title = "X")
+                )
+                shortcuts = shortcutDao?.getAll() as MutableList
+            }
 
             val adapter = ShortcutGridAdapter(requireContext(), shortcuts)
 

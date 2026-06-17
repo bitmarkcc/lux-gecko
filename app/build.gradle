@@ -40,8 +40,18 @@ android {
         jvmTarget = JavaVersion.VERSION_11
     }
 
+    signingConfigs {
+        release {
+            storeFile file("/home/ak/bld/lux/lux.jks")
+            storePassword findProperty("luxStorePassword") ?: ""
+            keyAlias "lux"
+            keyPassword findProperty("luxKeyPassword") ?: ""
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

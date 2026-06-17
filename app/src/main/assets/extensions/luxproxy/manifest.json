@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "Proxy Settings",
+  "version": "1.0",
+  "description": "Routes browser traffic through a SOCKS proxy (Tor by default).",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "luxproxy@lux",
+      "strict_min_version": "60.0"
+    }
+  },
+  "permissions": [
+    "proxy",
+    "storage",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_title": "Proxy Settings",
+    "default_popup": "popup.html",
+    "default_icon": "icons/proxy.svg"
+  },
+  "icons": {
+    "48": "icons/proxy.svg",
+    "96": "icons/proxy.svg"
+  }
+}

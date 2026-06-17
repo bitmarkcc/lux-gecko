@@ -1,0 +1,44 @@
+{
+  "manifest_version": 2,
+  "name": "Xmark",
+  "version": "1.3",
+
+  "description": "Mark your public X posts to nostr and the Bitmark blockchain.",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "xmark@xmark.cc"
+    }
+  },
+
+  "icons": {
+    "128": "icons/bitmark-128.png"
+  },
+
+    "background": {
+	"scripts": ["background-scripts/background.js"],
+	"persistent": false,
+	"type": "module"
+    },
+
+  "browser_action": {
+    "default_title": "Xmark",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "icons/bitmark-128.png"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://x.com/*"],
+      "js": ["content-scripts/content.js"]
+    }
+  ],
+    "permissions": [
+	"tabs",
+	"cookies",
+	"<all_urls>",
+	"storage"
+    ]
+}

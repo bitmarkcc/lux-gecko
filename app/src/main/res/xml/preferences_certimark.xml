@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.preference.Preference
+        android:key="certimark_open_options"
+        android:title="@string/certimark_open_options"
+        android:summary="@string/certimark_open_options_summary"/>
+</androidx.preference.PreferenceScreen>

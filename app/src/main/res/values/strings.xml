@@ -325,4 +325,9 @@
   <string name="flex_mode">Flex mode</string>
 
   <string name="save_as_pdf">Save as PDF</string>
+
+  <string name="settings_certimark">Certimark</string>
+  <string name="settings_certimark_explain">Certificate verification settings</string>
+  <string name="certimark_open_options">Open Certimark settings</string>
+  <string name="certimark_open_options_summary">Configure API server, trusted keys, and signers</string>
 </resources>

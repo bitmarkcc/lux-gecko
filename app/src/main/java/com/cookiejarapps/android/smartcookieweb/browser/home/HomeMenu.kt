@@ -3,8 +3,10 @@ package com.cookiejarapps.android.smartcookieweb.browser.home
 import android.content.Context
 import androidx.lifecycle.LifecycleOwner
 import com.cookiejarapps.android.smartcookieweb.R
+import com.cookiejarapps.android.smartcookieweb.ext.components
 import com.cookiejarapps.android.smartcookieweb.preferences.UserPreferences
 import mozilla.components.browser.menu.BrowserMenuBuilder
+import mozilla.components.browser.menu.WebExtensionBrowserMenuBuilder
 import mozilla.components.browser.menu.BrowserMenuHighlight
 import mozilla.components.browser.menu.ext.getHighlight
 import mozilla.components.browser.menu.item.BrowserMenuDivider
@@ -64,14 +66,6 @@ class HomeMenu(
             onItemTapped.invoke(Item.History)
         }
 
-        val addons = BrowserMenuImageText(
-            context.getString(R.string.mozac_browser_menu_extensions),
-            R.drawable.mozac_ic_extension_24,
-            R.color.primary_icon
-        ) {
-            onItemTapped.invoke(Item.AddonsManager)
-        }
-
         val settingsItem = BrowserMenuImageText(
             context.getString(R.string.settings),
             R.drawable.ic_round_settings,
@@ -87,8 +81,7 @@ class HomeMenu(
             historyItem,
             bookmarksItem,
             BrowserMenuDivider(),
-            settingsItem,
-            addons
+            settingsItem
         ).also { items ->
             items.getHighlight()?.let { onHighlightPresent(it) }
         }
@@ -101,6 +94,13 @@ class HomeMenu(
     }
 
     init {
-        onMenuBuilderChanged(BrowserMenuBuilder(coreMenuItems))
+        onMenuBuilderChanged(
+            WebExtensionBrowserMenuBuilder(
+                coreMenuItems,
+                store = context.components.store,
+                onAddonsManagerTapped = { onItemTapped.invoke(Item.AddonsManager) },
+                appendExtensionSubMenuAtStart = shouldUseBottomToolbar,
+            )
+        )
     }
 }

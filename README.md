@@ -68,8 +68,8 @@ Contributions are greatly appreciated. Feel free to open an issue or pull reques
 
 ## Donate
 
-XMR: 84qp8nTgei5RrjFzXW3KP3MoFmvh8CcRUBzuGtLpRE2PNr7W3nR7KpU3vxBuRNjHhfcLe8FoXGPzDhyPQk6kHmbb6Fuu3KQ
-BTM: bE28ZG3FpoGnyxobDFiybjJsQHUb9mLygb
+XMR: 84qp8nTgei5RrjFzXW3KP3MoFmvh8CcRUBzuGtLpRE2PNr7W3nR7KpU3vxBuRNjHhfcLe8FoXGPzDhyPQk6kHmbb6Fuu3KQ  
+BTM: bE28ZG3FpoGnyxobDFiybjJsQHUb9mLygb  
 BTC: bc1q0795vnddk099je8pp98uqckjlwzamm5t3hdfmz
 
 ---

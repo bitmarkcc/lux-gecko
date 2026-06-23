@@ -3,6 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
   <uses-permission android:name="android.permission.CAMERA" />
+  <!-- Removed: inherited from GeckoView/Android Components. Browsers are not an
+       approved use case for QUERY_ALL_PACKAGES on Play, so it risks rejection. -->
+  <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:node="remove" />
+  <!-- Removed: inherited but unused. No service declares foregroundServiceType="specialUse",
+       so this only triggers a Play declaration we can't justify. Downloads use dataSync and
+       media uses mediaPlayback, both of which we keep and declare. -->
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" tools:node="remove" />
+  <!-- Removed broad photo/video/audio access (Play "Photo and video permissions" policy).
+       File uploads use GeckoView's system photo/file picker, which needs no permission.
+       READ_MEDIA_VISUAL_USER_SELECTED (partial access) is kept and is not subject to the
+       broad-access declaration. tools:node="remove" also strips copies injected by deps. -->
+  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" tools:node="remove" />
+  <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" tools:node="remove" />
+  <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" tools:node="remove" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:node="remove" />
+  <!-- Removed: website geolocation disabled (avoids the Play Location permissions
+       declaration). Also strips copies injected by GeckoView/Android Components. -->
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:node="remove" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" tools:node="remove" />
+  <!-- Removed: Web Bluetooth is not implemented by GeckoView, so this is unused. -->
+  <uses-permission android:name="android.permission.BLUETOOTH" tools:node="remove" />
   <uses-feature
       android:name="android.hardware.camera"
       android:required="false" />
@@ -10,20 +31,13 @@
       android:name="android.hardware.camera.autofocus"
       android:required="false" />
   <uses-permission android:name="android.permission.RECORD_AUDIO" />
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission
       android:name="android.permission.WRITE_EXTERNAL_STORAGE"
       android:maxSdkVersion="28"
       tools:ignore="ScopedStorage"
       />
-  <uses-permission android:name="android.permission.BLUETOOTH" />
   <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-  <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-  <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
   <application
     android:name=".BrowserApp"

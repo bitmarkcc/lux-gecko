@@ -9,6 +9,8 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 const DEFAULT_API_URL = 'https://certimark.cc';
 const DEFAULT_API_PUBKEY_HASH = '512d578c6ea650c92361c8e20c8acaa1b3e9bf062a2aea839343d709b0ea3cf7';
+const DEFAULT_MARK_URL = 'https://xmark.cc';
+const DEFAULT_MARK_PUBKEY_HASH = 'a924a21bdecec29dff228fb13d36394f010c399d39bd9abd17a0ca7c349ce96d';
 
 async function getApiUrl() {
   try {
@@ -288,18 +290,29 @@ async function checkCert(tabId, hostname, path, securityInfo) {
   }
 }
 
-// Verify API server certificate against pinned pubkey hash
+// Verify the API server and marking server certificates against pinned hashes.
 let apiPinningFailed = false;
+
+function hostOf(url) {
+  try { return new URL(url).hostname; } catch (e) { return null; }
+}
 
 browser.webRequest.onHeadersReceived.addListener(
   async function(details) {
-    const apiUrl = await getApiUrl();
-    const apiHost = new URL(apiUrl).hostname;
     const reqHost = new URL(details.url).hostname;
-    if (reqHost !== apiHost) return;
 
-    const expectedHash = await getApiPubkeyHash();
-    if (!expectedHash) return; // pinning disabled if empty
+    // Pin both the API server (certimark.cc) and the marking server (xmark.cc)
+    // against their configured pubkey hashes.
+    const cfg = await browser.storage.local.get(['apiUrl', 'apiPubkeyHash', 'markUrl', 'markPubkeyHash']);
+    const pins = [
+      { host: hostOf(cfg.apiUrl || DEFAULT_API_URL), hash: cfg.apiPubkeyHash || DEFAULT_API_PUBKEY_HASH },
+      { host: hostOf(cfg.markUrl || DEFAULT_MARK_URL), hash: cfg.markPubkeyHash || DEFAULT_MARK_PUBKEY_HASH }
+    ];
+    let expectedHash = null;
+    for (let i = 0; i < pins.length; i++) {
+      if (pins[i].host === reqHost && pins[i].hash) { expectedHash = pins[i].hash; break; }
+    }
+    if (!expectedHash) return; // host not pinned (or pinning disabled with empty hash)
 
     let secInfo;
     try {
@@ -321,7 +334,7 @@ browser.webRequest.onHeadersReceived.addListener(
     }
 
     if (hex !== expectedHash.toLowerCase()) {
-      console.error('Certimark: API server pubkey hash mismatch! Expected: ' + expectedHash + ' Got: ' + hex);
+      console.error('Certimark: pubkey hash mismatch for ' + reqHost + '! Expected: ' + expectedHash + ' Got: ' + hex);
       apiPinningFailed = true;
       return { cancel: true };
     }

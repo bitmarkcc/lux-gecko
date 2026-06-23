@@ -1,7 +1,9 @@
 async function loadSettings() {
-  const result = await browser.storage.local.get(['apiUrl', 'apiPubkeyHash', 'trustedCerts', 'trustedSigners']);
+  const result = await browser.storage.local.get(['apiUrl', 'apiPubkeyHash', 'markUrl', 'markPubkeyHash', 'trustedCerts', 'trustedSigners']);
   document.getElementById('api-url').value = result.apiUrl || 'https://certimark.cc';
   document.getElementById('api-pubkey-hash').value = result.apiPubkeyHash || '512d578c6ea650c92361c8e20c8acaa1b3e9bf062a2aea839343d709b0ea3cf7';
+  document.getElementById('mark-url').value = result.markUrl || 'https://xmark.cc';
+  document.getElementById('mark-pubkey-hash').value = result.markPubkeyHash || 'a924a21bdecec29dff228fb13d36394f010c399d39bd9abd17a0ca7c349ce96d';
   renderTrustedCerts(result.trustedCerts || {});
   renderTrustedSigners(result.trustedSigners || {});
 }
@@ -76,7 +78,10 @@ document.getElementById('save-btn').addEventListener('click', async function() {
   // Remove trailing slash
   if (url.endsWith('/')) url = url.slice(0, -1);
   var pubkeyHash = document.getElementById('api-pubkey-hash').value.trim().toLowerCase();
-  await browser.storage.local.set({ apiUrl: url, apiPubkeyHash: pubkeyHash });
+  var markUrl = document.getElementById('mark-url').value.trim();
+  if (markUrl.endsWith('/')) markUrl = markUrl.slice(0, -1);
+  var markPubkeyHash = document.getElementById('mark-pubkey-hash').value.trim().toLowerCase();
+  await browser.storage.local.set({ apiUrl: url, apiPubkeyHash: pubkeyHash, markUrl: markUrl, markPubkeyHash: markPubkeyHash });
   var msg = document.getElementById('saved-msg');
   msg.style.display = 'inline';
   setTimeout(function() { msg.style.display = 'none'; }, 2000);

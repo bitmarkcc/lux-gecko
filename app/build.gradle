@@ -25,9 +25,9 @@ android {
         applicationId "cc.certimark.lux"
         minSdkVersion 21
         targetSdkVersion 35
-        // Increment by 4 with each update
-        versionCode 1
-        versionName "1.0"
+        // Bump by 1 each release; per-ABI codes are derived as base*1000+orig (see below)
+        versionCode 2
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -73,6 +73,13 @@ h3 { color: #A6ADC8; margin-top: 1.5rem; font-size: 1.15rem; }
 <input type="text" id="api-pubkey-hash" placeholder="512d578c6ea650c92361c8e20c8acaa1b3e9bf062a2aea839343d709b0ea3cf7">
 <div style="color:#A6ADC8;font-size:0.75rem;margin-top:0.2rem;">Leave empty to disable certificate pinning for the API server.</div>
 
+<label for="mark-url" style="margin-top:12px;">Marking Server URL</label>
+<input type="text" id="mark-url" placeholder="https://xmark.cc">
+
+<label for="mark-pubkey-hash" style="margin-top:12px;">Marking Server Pubkey Hash (SHA-256, hex)</label>
+<input type="text" id="mark-pubkey-hash" placeholder="a924a21bdecec29dff228fb13d36394f010c399d39bd9abd17a0ca7c349ce96d">
+<div style="color:#A6ADC8;font-size:0.75rem;margin-top:0.2rem;">Used by the "mark" button, and to pin the marking server's certificate.</div>
+
 <div>
   <button class="btn" id="save-btn">Save</button>
   <span class="saved" id="saved-msg">Saved!</span>

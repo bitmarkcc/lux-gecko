@@ -188,7 +188,7 @@ function setupMarkButton(tab, state) {
       } else if (data.bitmark_rpc_response) {
         try {
           var rpc = JSON.parse(data.bitmark_rpc_response);
-          if (rpc.error) errMsg = String(rpc.error);
+          if (rpc.error) errMsg = (rpc.error && rpc.error.message) ? rpc.error.message : (typeof rpc.error === 'string' ? rpc.error : JSON.stringify(rpc.error));
           else if (rpc.result) ok = true;
           else errMsg = 'unexpected marking response';
         } catch (e) { errMsg = 'could not parse marking response'; }
@@ -343,7 +343,7 @@ async function init() {
   } else if (state.status === 'not_marked') {
     statusBox.innerHTML = '<div class="status grey"><span class="status-icon">-</span><span class="status-text">This domain has no marked certificates via Linkmark</span></div>';
 
-    certDetails.innerHTML = '<div class="cert-info"><div><span class="label">Browser cert: </span><span class="value">' + showHash(state.browserCertHash) + '</span></div></div>';
+    certDetails.innerHTML = '<div class="cert-info"><div><span class="label">Browser cert: </span><span class="value">' + showHash(state.browserCertHash) + '</span>' + copyBtn(state.browserCertHash) + '</div></div>';
 
   } else if (state.status === 'onion_secure') {
     statusBox.innerHTML = '<div class="status green"><span class="status-icon"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="width:1.6rem;height:1.6rem;vertical-align:middle"><path d="M16 7 C16 4 18 3 20 3 C19 5 18 6 16 7Z" fill="#7D4698"/><path d="M16 7 C16 5 15 4 13 4 C14 6 15 6 16 7Z" fill="#7D4698"/><path d="M16 7 C9 9 6 15 8 21 C9.5 26 13 28 16 28 C19 28 22.5 26 24 21 C26 15 23 9 16 7Z" fill="#7D4698"/><path d="M16 12 C13 14 12 18 13 22" stroke="#C9A6E0" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M16 12 C19 14 20 18 19 22" stroke="#C9A6E0" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></span><span class="status-text">Onion address — cryptographically secure</span></div>';
